@@ -1,21 +1,12 @@
 import express from "express";
-import dotenv from "dotenv";
-import { clerkWebhook } from "./webhooks/clerk";
-
-
-dotenv.config();
+import profileRoutes from "./routes/profile";
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// Middleware to parse JSON
 app.use(express.json());
 
-// Health check route
-app.get("/", (req, res) => {
-  res.send("Backend server is running ");
-});
-app.post("/webhooks/clerk", express.json(), clerkWebhook);
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.use("/api", profileRoutes);
+
+app.listen(5000, () => {
+  console.log("Server running on http://localhost:5000");
 });
